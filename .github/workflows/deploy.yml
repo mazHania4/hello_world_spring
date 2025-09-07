@@ -16,7 +16,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Build with Maven
@@ -29,7 +29,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           source: "target/*.jar"
-          target: "~/springapp/"
+          target: "~/spring_backend/"
 
       - name: Run app on EC2
         uses: appleboy/ssh-action@v0.1.10
@@ -39,4 +39,4 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             pkill -f 'java -jar' || true
-            nohup java -jar ~/springapp/*.jar > ~/springapp/app.log 2>&1 &
+            nohup java -jar ~/spring_backend/*.jar > ~/spring_backend/app.log 2>&1 &
